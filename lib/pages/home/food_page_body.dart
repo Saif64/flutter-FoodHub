@@ -40,6 +40,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // slider section
         Container(
           //color: Colors.redAccent,
           height: Dimensions.pageView,
@@ -51,6 +52,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             },
           ),
         ),
+        // dots
         new DotsIndicator(
           dotsCount: 5,
           position: _currentPageValue,
@@ -59,9 +61,106 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             size: const Size.square(9.0),
             activeSize: const Size(18.0, 9.0),
             activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
           ),
         ),
+
+        // popular texts
+        SizedBox(
+          height: Dimensions.height30,
+        ),
+        Container(
+          margin: EdgeInsets.only(
+            left: Dimensions.width30,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BigText(text: 'Popular'),
+              SizedBox(width: Dimensions.width10),
+              SizedBox(width: Dimensions.width10),
+            ],
+          ),
+        ),
+        // list of popular foods
+        ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(
+                  left: Dimensions.width20,
+                  right: Dimensions.width20,
+                  bottom: Dimensions.height10,
+                ),
+                child: Row(
+                  children: [
+                    //shows image
+                    Container(
+                      height: Dimensions.listViewImgSize,
+                      width: Dimensions.listViewImgSize,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius20),
+                        color: Colors.white38,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/image/food0.png'),
+                        ),
+                      ),
+                    ),
+                    // text container
+                    Expanded(
+                      child: Container(
+                        height: Dimensions.listViewTextContSize,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(Dimensions.radius20),
+                              bottomRight: Radius.circular(Dimensions.radius20),
+                            ),
+                            color: Colors.cyanAccent),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: Dimensions.width10,
+                              right: Dimensions.width10),
+                          child: Column(
+                            children: [
+                              BigText(text: 'Chinese food'),
+                              SizedBox(
+                                height: Dimensions.height30,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconText(
+                                    icon: Icons.circle_sharp,
+                                    text: 'Normal',
+                                    iconColor: AppColors.iconColor1,
+                                  ),
+                                  IconText(
+                                    icon: Icons.location_on,
+                                    text: '1.7km',
+                                    iconColor: AppColors.mainColor,
+                                  ),
+                                  IconText(
+                                    icon: Icons.access_alarm_rounded,
+                                    text: '32 min',
+                                    iconColor: AppColors.iconColor2,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            })
       ],
     );
   }
