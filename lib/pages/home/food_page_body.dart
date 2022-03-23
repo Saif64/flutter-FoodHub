@@ -4,9 +4,9 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
+import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/icon_text.dart';
-import 'package:food_delivery/widgets/small_text.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
@@ -242,56 +242,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   left: Dimensions.width15,
                   right: Dimensions.width15,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigText(text: 'Chinese Food'),
-                    SizedBox(height: Dimensions.height10),
-                    // stars and comments
-                    Row(
-                      children: [
-                        Wrap(
-                          children: List.generate(
-                              5,
-                              (index) => Icon(
-                                    Icons.star,
-                                    color: AppColors.mainColor,
-                                    size: 15,
-                                  )),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        SmallText(text: '4.5'),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        SmallText(text: '1200 Comments')
-                      ],
-                    ),
-                    SizedBox(height: Dimensions.height20),
-                    //distances
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconText(
-                          icon: Icons.circle_sharp,
-                          text: 'Normal',
-                          iconColor: AppColors.iconColor1,
-                        ),
-                        IconText(
-                          icon: Icons.location_on,
-                          text: '1.7km',
-                          iconColor: AppColors.mainColor,
-                        ),
-                        IconText(
-                          icon: Icons.access_alarm_rounded,
-                          text: '32 min',
-                          iconColor: AppColors.iconColor2,
-                        )
-                      ],
-                    )
-                  ],
+                child: AppColumn(
+                  text: 'Chinese side',
                 ),
               ),
             ),
