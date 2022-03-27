@@ -1,7 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food_delivery/pages/food/recommended_food_detail.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:food_delivery/controllers/popular_food_controller.dart';
+import 'package:food_delivery/controllers/recommended_food_controller.dart';
+import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/routes/route_helper.dart';
+import 'package:get/get.dart';
 
 import 'helper/dependencies.dart' as dep;
 
@@ -16,17 +21,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    Get.find<PopularFoodController>().getPopularFoodList();
+    Get.find<RecommendedFoodController>().getRecommendedFoodList();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: RecommendedFoodDetail(),
+      home: MainFoodPage(),
+      initialRoute: RouteHelper.initial,
+      getPages: RouteHelper.routes,
     );
   }
 }
