@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/data/repository/popular_repo.dart';
 import 'package:food_delivery/models/product_model.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,9 @@ import 'package:get/get.dart';
 class PopularFoodController extends GetxController {
   final PopularRepo popularRepo;
   PopularFoodController({required this.popularRepo});
-
   List<ProductModel> _popularFoodList = [];
   List<ProductModel> get popularFoodList => _popularFoodList;
+  late CartController _cart;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
@@ -41,9 +42,9 @@ class PopularFoodController extends GetxController {
   }
 
   int checkQuantity(int quantity) {
-    if (quantity < 0) {
+    if ((_inCartItems + quantity) < 0) {
       return 0;
-    } else if (quantity > 20) {
+    } else if ((_inCartItems + quantity) > 20) {
       Get.snackbar(
         'max order',
         'Max order limit reached',
@@ -54,9 +55,31 @@ class PopularFoodController extends GetxController {
     }
   }
 
-  void initProduct() {
+  void initProduct(ProductModel product, CartController cart) {
     _quantity = 0;
     _inCartItems = 0;
+    _cart = cart;
+    var exist = false;
+    exist = _cart.existInCart(product);
     // if exists
+    // print('exits or not ' + exist.toString());
+    if (exist) {
+      _inCartItems = _cart.getQuantity(product);
+    }
+    print('The quantity in the cart is ' + _inCartItems.toString());
+  }
+
+  void addItem(ProductModel product) {
+    _cart.addItem(product, _quantity);
+    _quantity = 0;
+    _inCartItems = _cart.getQuantity(product);
+
+    _cart.items.forEach((key, value) {
+      print('The id is' +
+          value.id.toString() +
+          " the quantity is " +
+          value.quantity.toString());
+    });
+    update();
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/controllers/popular_food_controller.dart';
 import 'package:food_delivery/pages/home/main_food_page.dart';
 import 'package:food_delivery/utils/app_constants.dart';
@@ -18,7 +19,8 @@ class PopularFoodDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var product = Get.find<PopularFoodController>().popularFoodList[pageId];
-    Get.find<PopularFoodController>().initProduct();
+    Get.find<PopularFoodController>()
+        .initProduct(product, Get.find<CartController>());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -126,7 +128,7 @@ class PopularFoodDetail extends StatelessWidget {
                           },
                           child: Icon(Icons.remove, color: Colors.black)),
                       SizedBox(width: Dimensions.width10),
-                      BigText(text: popularFood.quantity.toString()),
+                      BigText(text: popularFood.intCartItem.toString()),
                       SizedBox(width: Dimensions.width10),
                       GestureDetector(
                         onTap: () {
@@ -145,9 +147,14 @@ class PopularFoodDetail extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       color: Colors.greenAccent),
-                  child: BigText(
-                    text: '\$ ${product.price!} | ADD TO CART',
-                    color: Colors.black,
+                  child: GestureDetector(
+                    onTap: () {
+                      popularFood.addItem(product);
+                    },
+                    child: BigText(
+                      text: '\$ ${product.price!} | ADD TO CART',
+                      color: Colors.black,
+                    ),
                   ),
                 )
               ],
