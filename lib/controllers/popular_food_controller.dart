@@ -43,6 +43,10 @@ class PopularFoodController extends GetxController {
 
   int checkQuantity(int quantity) {
     if ((_inCartItems + quantity) < 0) {
+      if (_inCartItems > 0) {
+        _quantity = -_inCartItems;
+        return _quantity;
+      }
       return 0;
     } else if ((_inCartItems + quantity) > 20) {
       Get.snackbar(
@@ -81,5 +85,9 @@ class PopularFoodController extends GetxController {
           value.quantity.toString());
     });
     update();
+  }
+
+  int get totalItems {
+    return _cart.totalItems;
   }
 }

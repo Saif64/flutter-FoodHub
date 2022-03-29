@@ -32,18 +32,20 @@ class CartController extends GetxController {
         _items.remove(product.id);
       }
     } else {
-      _items.putIfAbsent(product.id!, () {
-        return CartModel(
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          img: product.img,
-          location: product.location,
-          quantity: quantity,
-          isExist: true,
-          time: DateTime.now().toString(),
-        );
-      });
+      if (quantity > 0) {
+        _items.putIfAbsent(product.id!, () {
+          return CartModel(
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            img: product.img,
+            location: product.location,
+            quantity: quantity,
+            isExist: true,
+            time: DateTime.now().toString(),
+          );
+        });
+      }
     }
   }
 
@@ -64,5 +66,14 @@ class CartController extends GetxController {
       });
     }
     return quantity;
+  }
+
+  int get totalItems {
+    var totalQuantity = 0;
+    _items.forEach((key, value) {
+      totalQuantity += value.quantity!;
+    });
+
+    return totalQuantity;
   }
 }
