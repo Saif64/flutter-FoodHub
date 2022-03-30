@@ -16,7 +16,9 @@ import '../../controllers/cart_controllers.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
   int pageId;
-  RecommendedFoodDetail({Key? key, required this.pageId}) : super(key: key);
+  final String page;
+  RecommendedFoodDetail({Key? key, required this.pageId, required this.page})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,46 +39,52 @@ class RecommendedFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Get.toNamed(RouteHelper.getInitial());
+                      if (page == 'cartPage') {
+                        Get.toNamed(RouteHelper.getCartPage());
+                      } else {
+                        Get.toNamed(RouteHelper.getInitial());
+                      }
                     },
                     child: AppIcon(icon: Icons.clear_rounded)),
                 //AppIcon(icon: Icons.add_shopping_cart_outlined),
                 GetBuilder<PopularFoodController>(builder: (controller) {
-                  return Stack(
-                    children: [
-                      AppIcon(icon: Icons.shopping_cart_outlined),
-                      Get.find<PopularFoodController>().totalItems >= 1
-                          ? Positioned(
-                              right: 0,
-                              top: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(RouteHelper.getCartPage());
-                                },
+                  return GestureDetector(
+                    onTap: () {
+                      if (controller.totalItems >= 1) {
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        Get.find<PopularFoodController>().totalItems >= 1
+                            ? Positioned(
+                                right: 0,
+                                top: 0,
                                 child: AppIcon(
                                   icon: Icons.circle,
                                   size: Dimensions.radius20,
                                   iconColor: Colors.transparent,
                                   backgroundColor: AppColors.mainColor,
                                 ),
-                              ),
-                            )
-                          : Container(),
-                      Get.find<PopularFoodController>().totalItems >= 1
-                          ? Positioned(
-                              right: 5,
-                              top: 5,
-                              bottom: 5,
-                              child: BigText(
-                                text: Get.find<PopularFoodController>()
-                                    .totalItems
-                                    .toString(),
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )
-                          : Container(),
-                    ],
+                              )
+                            : Container(),
+                        Get.find<PopularFoodController>().totalItems >= 1
+                            ? Positioned(
+                                right: 5,
+                                top: 5,
+                                bottom: 5,
+                                child: BigText(
+                                  text: Get.find<PopularFoodController>()
+                                      .totalItems
+                                      .toString(),
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
                   );
                 }),
               ],

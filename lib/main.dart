@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/controllers/popular_food_controller.dart';
 import 'package:food_delivery/controllers/recommended_food_controller.dart';
-import 'package:food_delivery/pages/home/main_food_page.dart';
-import 'package:food_delivery/routes/route_helper.dart';
 import 'package:get/get.dart';
 
 import 'helper/dependencies.dart' as dep;
+import 'routes/route_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,19 +20,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularFoodController>().getPopularFoodList();
-    Get.find<RecommendedFoodController>().getRecommendedFoodList();
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: MainFoodPage(),
-      initialRoute: RouteHelper.initial,
-      getPages: RouteHelper.routes,
-    );
+    return GetBuilder<PopularFoodController>(builder: (_) {
+      return GetBuilder<RecommendedFoodController>(builder: (_) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          initialRoute: RouteHelper.getSplashPage(),
+          getPages: RouteHelper.routes,
+        );
+      });
+    });
   }
 }

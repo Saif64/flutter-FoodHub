@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/controllers/popular_food_controller.dart';
-import 'package:food_delivery/pages/home/main_food_page.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
@@ -16,7 +15,9 @@ import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
   int pageId;
-  PopularFoodDetail({Key? key, required this.pageId}) : super(key: key);
+  final String page;
+  PopularFoodDetail({Key? key, required this.pageId, required this.page})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,47 +56,53 @@ class PopularFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Get.to(() => MainFoodPage());
+                      if (page == 'cartPage') {
+                        Get.toNamed(RouteHelper.getCartPage());
+                      } else {
+                        Get.toNamed(RouteHelper.getInitial());
+                      }
                     },
                     child: AppIcon(icon: Icons.arrow_back)),
 
                 //cart icon
                 GetBuilder<PopularFoodController>(builder: (controller) {
-                  return Stack(
-                    children: [
-                      AppIcon(icon: Icons.shopping_cart_outlined),
-                      Get.find<PopularFoodController>().totalItems >= 1
-                          ? Positioned(
-                              right: 0,
-                              top: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(RouteHelper.getCartPage());
-                                },
+                  return GestureDetector(
+                    onTap: () {
+                      if (controller.totalItems >= 1) {
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        controller.totalItems >= 1
+                            ? Positioned(
+                                right: 0,
+                                top: 0,
                                 child: AppIcon(
                                   icon: Icons.circle,
-                                  size: Dimensions.radius20,
+                                  size: 20,
                                   iconColor: Colors.transparent,
                                   backgroundColor: AppColors.mainColor,
                                 ),
-                              ),
-                            )
-                          : Container(),
-                      Get.find<PopularFoodController>().totalItems >= 1
-                          ? Positioned(
-                              right: 5,
-                              top: 5,
-                              bottom: 5,
-                              child: BigText(
-                                text: Get.find<PopularFoodController>()
-                                    .totalItems
-                                    .toString(),
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )
-                          : Container(),
-                    ],
+                              )
+                            : Container(),
+                        Get.find<PopularFoodController>().totalItems >= 1
+                            ? Positioned(
+                                right: 5,
+                                top: 5,
+                                bottom: 5,
+                                child: BigText(
+                                  text: Get.find<PopularFoodController>()
+                                      .totalItems
+                                      .toString(),
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
                   );
                 })
               ],
