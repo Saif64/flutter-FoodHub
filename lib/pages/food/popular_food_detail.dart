@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/controllers/popular_food_controller.dart';
 import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -67,11 +68,16 @@ class PopularFoodDetail extends StatelessWidget {
                           ? Positioned(
                               right: 0,
                               top: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: Dimensions.radius20,
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.mainColor,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(RouteHelper.getCartPage());
+                                },
+                                child: AppIcon(
+                                  icon: Icons.circle,
+                                  size: Dimensions.radius20,
+                                  iconColor: Colors.transparent,
+                                  backgroundColor: AppColors.mainColor,
+                                ),
                               ),
                             )
                           : Container(),

@@ -2,6 +2,7 @@
 
 import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/data/repository/popular_repo.dart';
+import 'package:food_delivery/models/cart_model.dart';
 import 'package:food_delivery/models/product_model.dart';
 import 'package:get/get.dart';
 
@@ -89,5 +90,9 @@ class PopularFoodController extends GetxController {
 
   int get totalItems {
     return _cart.totalItems;
+  }
+
+  List<CartModel> get getItems {
+    return _cart.getItems;
   }
 }

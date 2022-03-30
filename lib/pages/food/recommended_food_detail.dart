@@ -49,11 +49,16 @@ class RecommendedFoodDetail extends StatelessWidget {
                           ? Positioned(
                               right: 0,
                               top: 0,
-                              child: AppIcon(
-                                icon: Icons.circle,
-                                size: Dimensions.radius20,
-                                iconColor: Colors.transparent,
-                                backgroundColor: AppColors.mainColor,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(RouteHelper.getCartPage());
+                                },
+                                child: AppIcon(
+                                  icon: Icons.circle,
+                                  size: Dimensions.radius20,
+                                  iconColor: Colors.transparent,
+                                  backgroundColor: AppColors.mainColor,
+                                ),
                               ),
                             )
                           : Container(),
