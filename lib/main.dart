@@ -6,6 +6,7 @@ import 'package:food_delivery/controllers/popular_food_controller.dart';
 import 'package:food_delivery/controllers/recommended_food_controller.dart';
 import 'package:get/get.dart';
 
+import 'controllers/cart_controllers.dart';
 import 'helper/dependencies.dart' as dep;
 import 'routes/route_helper.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
-
+    Get.find<CartController>().getCartData();
     return GetBuilder<PopularFoodController>(builder: (_) {
       return GetBuilder<RecommendedFoodController>(builder: (_) {
         return GetMaterialApp(
