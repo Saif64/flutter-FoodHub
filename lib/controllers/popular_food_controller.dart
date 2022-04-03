@@ -71,7 +71,7 @@ class PopularFoodController extends GetxController {
     if (exist) {
       _inCartItems = _cart.getQuantity(product);
     }
-    print('The quantity in the cart is ' + _inCartItems.toString());
+    //print('The quantity in the cart is ' + _inCartItems.toString());
   }
 
   void addItem(ProductModel product) {
