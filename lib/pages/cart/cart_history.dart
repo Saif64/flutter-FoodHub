@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controllers.dart';
 import 'package:food_delivery/models/cart_model.dart';
 import 'package:food_delivery/routes/route_helper.dart';
-import 'package:food_delivery/utils/app_constants.dart';
-import 'package:food_delivery/utils/dimensions.dart';
-import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/small_text.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../utils/app_constants.dart';
+import '../../utils/dimensions.dart';
 
 class CartHistory extends StatelessWidget {
   const CartHistory({Key? key}) : super(key: key);
@@ -45,24 +45,13 @@ class CartHistory extends StatelessWidget {
     var listCounter = 0;
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: BigText(text: 'CART HISTORY'),
+        backgroundColor: Colors.green,
+      ),
       body: Column(
         children: [
-          Container(
-            height: Dimensions.height10 * 10,
-            color: Colors.green,
-            width: double.maxFinite,
-            padding: EdgeInsets.only(top: Dimensions.height45),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                BigText(
-                  text: 'CART HISTORY',
-                  color: Colors.white,
-                ),
-                AppIcon(icon: Icons.shopping_cart)
-              ],
-            ),
-          ),
           Expanded(
             child: Container(
                 margin: EdgeInsets.only(
